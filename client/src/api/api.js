@@ -54,3 +54,16 @@ export const getReportById = async (id) => {
 
   return response.json();
 };
+
+export const deleteReportById = async (id) => {
+  const response = await fetch(`${API_BASE_URL}/reports/delete/${id}`, {
+    method: "DELETE",
+  });
+  console.log("deletion repsonse", response);
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Failed to delete report");
+  }
+
+  return response.json();
+};

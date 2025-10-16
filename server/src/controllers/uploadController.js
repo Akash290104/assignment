@@ -21,23 +21,34 @@ export const uploadXML = async (req, res, next) => {
   try {
     // 1️⃣ Validate file type
     if (!req.file || !req.file.originalname.endsWith(".xml")) {
-      return res.status(400).json({ message: "Please upload a valid XML file" });
+      return res
+        .status(400)
+        .json({ message: "Please upload a valid XML file" });
     }
 
     // 2️⃣ Parse XML into JS object
     const result = await parseXML(req.file.path);
 
     // 3️⃣ Extract nested fields safely with optional chaining
-    const currentApp = result.INProfileResponse?.Current_Application?.Current_Application_Details || {};
+    const currentApp =
+      result.INProfileResponse?.Current_Application
+        ?.Current_Application_Details || {};
     const applicant = currentApp.Current_Applicant_Details || {};
-    const caisAccounts = result.INProfileResponse?.CAIS_Account?.CAIS_Account_DETAILS || [];
-    const caisSummary = result.INProfileResponse?.CAIS_Account?.CAIS_Summary?.Credit_Account || {};
+    const caisAccounts =
+      result.INProfileResponse?.CAIS_Account?.CAIS_Account_DETAILS || [];
+    const caisSummary =
+      result.INProfileResponse?.CAIS_Account?.CAIS_Summary?.Credit_Account ||
+      {};
 
     // 4️⃣ Structure extracted data for MongoDB
     const extractedData = {
       basicDetails: {
         name: applicant.First_Name || "",
-        middleNames: [applicant.Middle_Name1 || "", applicant.Middle_Name2 || "", applicant.Middle_Name3 || ""],
+        middleNames: [
+          applicant.Middle_Name1 || "",
+          applicant.Middle_Name2 || "",
+          applicant.Middle_Name3 || "",
+        ],
         lastName: applicant.Last_Name || "",
         mobilePhone: applicant.MobilePhoneNumber || "",
         pan:
@@ -56,13 +67,16 @@ export const uploadXML = async (req, res, next) => {
         closedAccounts: Number(caisSummary.CreditAccountClosed || 0),
         defaultAccounts: Number(caisSummary.CreditAccountDefault || 0),
         currentBalanceAmount: Number(
-          result.INProfileResponse?.CAIS_Account?.CAIS_Summary?.Total_Outstanding_Balance?.Outstanding_Balance_All || 0
+          result.INProfileResponse?.CAIS_Account?.CAIS_Summary
+            ?.Total_Outstanding_Balance?.Outstanding_Balance_All || 0
         ),
         securedAccountsAmount: Number(
-          result.INProfileResponse?.CAIS_Account?.CAIS_Summary?.Total_Outstanding_Balance?.Outstanding_Balance_Secured || 0
+          result.INProfileResponse?.CAIS_Account?.CAIS_Summary
+            ?.Total_Outstanding_Balance?.Outstanding_Balance_Secured || 0
         ),
         unsecuredAccountsAmount: Number(
-          result.INProfileResponse?.CAIS_Account?.CAIS_Summary?.Total_Outstanding_Balance?.Outstanding_Balance_UnSecured || 0
+          result.INProfileResponse?.CAIS_Account?.CAIS_Summary
+            ?.Total_Outstanding_Balance?.Outstanding_Balance_UnSecured || 0
         ),
         last7DaysCreditEnquiries: Number(
           result.INProfileResponse?.TotalCAPS_Summary?.TotalCAPSLast7Days || 0
@@ -134,6 +148,27 @@ export const getReportById = async (req, res, next) => {
     res.status(200).json({ success: true, data: report });
   } catch (error) {
     console.error("Error fetching report by ID:", error);
+    next(error);
+  }
+};
+
+/**
+ * @desc Delete a credit report by ID
+ * @route DELETE /api/reports/:id
+ * @access Public
+ */
+export const deleteReportById = async (req, res, next) => {
+  try {
+    const report =
+     await CreditReport.findByIdAndDelete(req.params.id);
+    if (!report) {
+      return res.status(404).json({ message: "Report not found" });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "Report deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting report:", error);
     next(error);
   }
 };
