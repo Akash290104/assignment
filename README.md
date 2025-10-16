@@ -110,7 +110,7 @@ npm start
 npm install
 ```
 
-2. Configure API URL (already set in `.env.local`):
+2. Configure API URL (already set in `.env.development`):
 
 ```
 VITE_API_URL=http://localhost:{PORT_NO}/api
@@ -126,12 +126,13 @@ The frontend will run on `http://localhost:5173`
 
 ## API Endpoints
 
-| Method | Endpoint           | Description                        |
-| ------ | ------------------ | ---------------------------------- |
-| GET    | `/`                | API health check                   |
-| POST   | `/api/upload`      | Upload and parse XML credit report |
-| GET    | `/api/reports`     | Get all credit reports             |
-| GET    | `/api/reports/:id` | Get single report by ID            |
+| Method | Endpoint                  | Description                        |
+| ------ | ------------------------- | ---------------------------------- |
+| GET    | `/`                       | API health check                   |
+| POST   | `/api/upload`             | Upload and parse XML credit report |
+| GET    | `/api/reports`            | Get all credit reports             |
+| GET    | `/api/reports/:id`        | Get single report by ID            |
+| DELETE | `/api/reports/delete/:id` | Delete single report by ID         |
 
 ## Usage Guide
 
@@ -156,6 +157,11 @@ The frontend will run on `http://localhost:5173`
   - Basic details (Name, PAN, Phone, Credit Score)
   - Report summary (Accounts, Balances, Enquiries)
   - Individual credit accounts with full details
+
+### 4. Delete Report
+
+- Click on "Trash" icon of any report card from the reports list
+- Delete that particular report
 
 ## Development
 
