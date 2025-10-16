@@ -19,7 +19,7 @@ connectDB();
 const app = express();
 
 const corsOptions = {
-  origin: ["https://assignment-logu8wmip-akashs-projects-6f1d4f45.vercel.app", "http://localhost:5173"],
+  origin: ["https://assignment-lvpn0agls-akashs-projects-6f1d4f45.vercel.app", "http://localhost:5173"],
   methods: ["GET", "POST", "DELETE", "PUT"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
