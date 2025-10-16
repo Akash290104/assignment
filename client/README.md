@@ -110,7 +110,7 @@ npm start
 npm install
 ```
 
-2. Configure API URL (already set in `.env.local`):
+2. Configure API URL (already set in `.env`):
 
 ```
 VITE_API_URL=http://localhost:{PORT_NO}/api
