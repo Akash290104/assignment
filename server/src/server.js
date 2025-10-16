@@ -18,8 +18,15 @@ connectDB();
 
 const app = express();
 
+const corsOptions = {
+  origin: ["https://assignment-five-hazel.vercel.app", "http://localhost:5173"],
+  methods: ["GET", "POST", "DELETE", "PUT"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
 // Middleware
-app.use(cors()); // Enable CORS
+app.use(cors(corsOptions)); // Enable CORS
 app.use(express.json()); // Parse JSON request bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 
