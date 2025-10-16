@@ -31,7 +31,7 @@ A complete full-stack application for processing and viewing Experian XML credit
 
 ```
 project/
-├── backend/                    # Backend API
+├── server/                    # Backend API
 │   ├── src/
 │   │   ├── config/            # Database configuration
 │   │   ├── controllers/       # Business logic
@@ -44,12 +44,13 @@ project/
 │   ├── .env                   # Environment variables
 │   └── package.json
 │
-├── src/                       # Frontend application
-│   ├── api/                   # API service layer
-│   ├── components/            # React components
-│   ├── pages/                 # Page components
-│   ├── App.tsx                # Main app component
-│   └── main.tsx               # Entry point
+├── client/
+|   ├──src/                       # Frontend application
+│   │   ├── api/                   # API service layer
+│   │   ├── components/            # React components
+│   │   ├── pages/                 # Page components
+│   │   ├── App.jsx                # Main app component
+│   │   └── main.jsx               # Entry point
 │
 └── README.md
 ```
@@ -67,7 +68,7 @@ project/
 1. Navigate to backend directory:
 
 ```bash
-cd backend
+cd server
 ```
 
 2. Install dependencies:
@@ -77,7 +78,7 @@ npm install
 ```
 
 3. Configure environment variables:
-   Edit `backend/.env`:
+   Edit `server/.env`:
 
 ```
 PORT
