@@ -2,6 +2,9 @@
 
 A complete full-stack application for processing and viewing Experian XML credit reports. Upload XML files to parse credit data and view comprehensive reports with detailed account information.
 
+Deployed Link - https://assignment-five-hazel.vercel.app
+The backend in deployed link takes 30 seconds to start because I use free plan of Render for deploying the backend.
+
 ## Features
 
 ### Backend
